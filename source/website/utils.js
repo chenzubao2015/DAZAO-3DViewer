@@ -131,7 +131,11 @@ export function CreateSvgIconElement (iconName, className)
     if (className) {
         iconDiv.classList.add (className);
     }
-    AddDomElement (iconDiv, 'i', 'icon icon-' + iconName);
+    if (iconName === 'pan') {
+        iconDiv.innerHTML = '<svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M9 2v14M2 9h14M9 2L6.8 4.2M9 2l2.2 2.2M9 16l-2.2-2.2M9 16l2.2-2.2M2 9l2.2-2.2M2 9l2.2 2.2M16 9l-2.2-2.2M16 9l-2.2 2.2"/></svg>';
+    } else {
+        AddDomElement (iconDiv, 'i', 'icon icon-' + iconName);
+    }
     return iconDiv;
 }
 

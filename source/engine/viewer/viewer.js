@@ -369,6 +369,16 @@ export class Viewer
         this.Render ();
     }
 
+    SetLeftButtonPan (leftButtonPan)
+    {
+        this.navigation.SetLeftButtonPan (leftButtonPan);
+    }
+
+    GetLeftButtonPan ()
+    {
+        return this.navigation.GetLeftButtonPan ();
+    }
+
     SetUpVector (upDirection, animate)
     {
         let oldCamera = this.navigation.GetCamera ();

@@ -242,6 +242,7 @@ export class Navigation
 		this.camera = camera;
 		this.callbacks = callbacks;
 		this.navigationMode = NavigationMode.FixedUpVector;
+		this.leftButtonPan = false;
 
 		this.mouse = new MouseInteraction ();
 		this.touch = new TouchInteraction ();
@@ -290,6 +291,19 @@ export class Navigation
 	SetNavigationMode (navigationMode)
 	{
 		this.navigationMode = navigationMode;
+	}
+
+	GetLeftButtonPan ()
+	{
+		return this.leftButtonPan;
+	}
+
+	SetLeftButtonPan (leftButtonPan)
+	{
+		this.leftButtonPan = Boolean (leftButtonPan);
+		if (this.canvas && this.canvas.style) {
+			this.canvas.style.cursor = this.leftButtonPan ? 'move' : '';
+		}
 	}
 
 	GetCamera ()
@@ -391,7 +405,7 @@ export class Navigation
 		if (mouseButton === 1) {
 			if (ev.ctrlKey) {
 				navigationType = NavigationType.Zoom;
-			} else if (ev.shiftKey) {
+			} else if (ev.shiftKey || this.leftButtonPan) {
 				navigationType = NavigationType.Pan;
 			} else {
 				navigationType = NavigationType.Orbit;
@@ -456,7 +470,7 @@ export class Navigation
 
 		let navigationType = NavigationType.None;
 		if (fingerCount === 1) {
-			navigationType = NavigationType.Orbit;
+			navigationType = this.leftButtonPan ? NavigationType.Pan : NavigationType.Orbit;
 		} else if (fingerCount === 2) {
 			navigationType = NavigationType.Pan;
 		}

@@ -9,6 +9,7 @@ let gLocalizedStrings = {
     'Flip up vector' : { zh : '翻转向上轴' },
     'Fixed up vector' : { zh : '固定向上轴' },
     'Free orbit' : { zh : '自由旋转视角' },
+    'Pan model' : { zh : '平移移动位置 (开启后左键拖动平移；也可直接按住鼠标右键或 Shift+左键平移)' },
     'Perspective camera' : { zh : '透视视图' },
     'Orthographic camera' : { zh : '正交视图' },
     'Measure' : { zh : '测量工具' },

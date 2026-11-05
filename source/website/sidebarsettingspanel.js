@@ -18,7 +18,7 @@ function AddColorPicker (parentDiv, opacity, defaultColor, predefinedColors, onC
     let pickr = Pickr.create ({
         el : parentDiv,
         theme : 'monolith',
-        position : 'left-start',
+        position : 'right-start',
         swatches : predefinedColors,
         comparison : false,
         default : defaultColor,

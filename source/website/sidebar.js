@@ -5,26 +5,35 @@ import { SidebarSettingsPanel } from './sidebarsettingspanel.js';
 
 export class Sidebar
 {
-    constructor (mainDiv, settings)
+    constructor (mainDiv, settings, panelSet)
     {
         this.mainDiv = mainDiv;
-        this.panelSet = new PanelSet (mainDiv);
+        this.panelSet = panelSet || new PanelSet (mainDiv);
+        this.isMergedIntoNavigator = Boolean (panelSet);
 
         this.detailsPanel = new SidebarDetailsPanel (this.panelSet.GetContentDiv ());
         this.settingsPanel = new SidebarSettingsPanel (this.panelSet.GetContentDiv (), settings);
 
         this.panelSet.AddPanel (this.detailsPanel);
         this.panelSet.AddPanel (this.settingsPanel);
-        this.panelSet.ShowPanel (this.detailsPanel);
+        if (!this.isMergedIntoNavigator) {
+            this.panelSet.ShowPanel (this.detailsPanel);
+        }
     }
 
     IsPanelsVisible ()
     {
+        if (this.isMergedIntoNavigator) {
+            return false;
+        }
         return this.panelSet.IsPanelsVisible ();
     }
 
     ShowPanels (show)
     {
+        if (this.isMergedIntoNavigator) {
+            return;
+        }
         this.panelSet.ShowPanels (show);
     }
 
@@ -32,14 +41,16 @@ export class Sidebar
     {
         this.callbacks = callbacks;
 
-        this.panelSet.Init ({
-            onResizeRequested : () => {
-                this.callbacks.onResizeRequested ();
-            },
-            onShowHidePanels : (show) => {
-                this.callbacks.onShowHidePanels (show);
-            }
-        });
+        if (!this.isMergedIntoNavigator) {
+            this.panelSet.Init ({
+                onResizeRequested : () => {
+                    this.callbacks.onResizeRequested ();
+                },
+                onShowHidePanels : (show) => {
+                    this.callbacks.onShowHidePanels (show);
+                }
+            });
+        }
 
         this.settingsPanel.Init ({
             getShadingType : () => {
@@ -78,22 +89,34 @@ export class Sidebar
 
     Resize (height)
     {
+        if (this.isMergedIntoNavigator) {
+            return;
+        }
         SetDomElementOuterHeight (this.mainDiv, height);
         this.panelSet.Resize ();
     }
 
     GetWidth ()
     {
+        if (this.isMergedIntoNavigator) {
+            return 0;
+        }
         return GetDomElementOuterWidth (this.mainDiv);
     }
 
     SetWidth (width)
     {
+        if (this.isMergedIntoNavigator) {
+            return;
+        }
         SetDomElementOuterWidth (this.mainDiv, width);
     }
 
     Clear ()
     {
+        if (this.isMergedIntoNavigator) {
+            return;
+        }
         this.panelSet.Clear ();
     }
 

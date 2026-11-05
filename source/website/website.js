@@ -171,7 +171,7 @@ export class Website
         this.hashHandler = new HashHandler ();
         this.toolbar = new Toolbar (this.parameters.toolbarDiv);
         this.navigator = new Navigator (this.parameters.navigatorDiv);
-        this.sidebar = new Sidebar (this.parameters.sidebarDiv, this.settings);
+        this.sidebar = new Sidebar (this.parameters.sidebarDiv, this.settings, this.navigator.panelSet);
         this.modelLoaderUI = new ThreeModelLoaderUI ();
         this.themeHandler = new ThemeHandler ();
         this.highlightColor = new RGBColor (142, 201, 240);
@@ -668,7 +668,12 @@ export class Website
             this.viewer.FlipUpVector ();
         });
         AddSeparator (this.toolbar, ['only_full_width', 'only_on_model']);
-        AddRadioButton (this.toolbar, ['fix_up_on', 'fix_up_off'], [Loc ('Fixed up vector'), Loc ('Free orbit')], navigationModeIndex, ['only_full_width', 'only_on_model'], (buttonIndex) => {
+        let panButton = null;
+        let orbitButtons = AddRadioButton (this.toolbar, ['fix_up_on', 'fix_up_off'], [Loc ('Fixed up vector'), Loc ('Free orbit')], navigationModeIndex, ['only_full_width', 'only_on_model'], (buttonIndex) => {
+            if (panButton !== null && panButton.IsSelected ()) {
+                panButton.SetSelected (false);
+                this.viewer.SetLeftButtonPan (false);
+            }
             if (buttonIndex === 0) {
                 this.cameraSettings.navigationMode = NavigationMode.FixedUpVector;
             } else if (buttonIndex === 1) {
@@ -676,6 +681,19 @@ export class Website
             }
             this.cameraSettings.SaveToCookies ();
             this.viewer.SetNavigationMode (this.cameraSettings.navigationMode);
+        });
+        panButton = AddPushButton (this.toolbar, 'pan', Loc ('Pan model'), ['only_on_model'], (isSelected) => {
+            this.viewer.SetLeftButtonPan (isSelected);
+            if (isSelected) {
+                for (let btn of orbitButtons) {
+                    btn.SetSelected (false);
+                }
+            } else {
+                let activeIdx = (this.cameraSettings.navigationMode === NavigationMode.FixedUpVector ? 0 : 1);
+                if (orbitButtons[activeIdx]) {
+                    orbitButtons[activeIdx].SetSelected (true);
+                }
+            }
         });
         AddSeparator (this.toolbar, ['only_full_width', 'only_on_model']);
         AddRadioButton (this.toolbar, ['camera_perspective', 'camera_orthographic'], [Loc ('Perspective camera'), Loc ('Orthographic camera')], projectionModeIndex, ['only_full_width', 'only_on_model'], (buttonIndex) => {
@@ -715,6 +733,18 @@ export class Website
         AddButton (this.toolbar, 'snapshot', Loc ('Create snapshot'), ['only_full_width', 'only_on_model'], () => {
             ShowSnapshotDialog (this.viewer);
         });
+        AddSeparator (this.toolbar, ['only_full_width', 'only_on_model']);
+
+        let selectedTheme = (this.settings.themeId === Theme.Light ? 1 : 0);
+        AddRadioButton (this.toolbar, ['dark_mode', 'light_mode'], [Loc ('Dark mode'), Loc ('Light mode')], selectedTheme, [], (buttonIndex) => {
+            if (buttonIndex === 0) {
+                this.settings.themeId = Theme.Dark;
+            } else if (buttonIndex === 1) {
+                this.settings.themeId = Theme.Light;
+            }
+            HandleEvent ('theme_changed', this.settings.themeId === Theme.Light ? 'light' : 'dark');
+            this.SwitchTheme (this.settings.themeId, true);
+        });
 
         EnumeratePlugins (PluginType.Toolbar, (plugin) => {
             plugin.registerButtons ({
@@ -728,17 +758,6 @@ export class Website
                     return this.model;
                 }
             });
-        });
-
-        let selectedTheme = (this.settings.themeId === Theme.Light ? 1 : 0);
-        AddRadioButton (this.toolbar, ['dark_mode', 'light_mode'], [Loc ('Dark mode'), Loc ('Light mode')], selectedTheme, ['align_right'], (buttonIndex) => {
-            if (buttonIndex === 0) {
-                this.settings.themeId = Theme.Dark;
-            } else if (buttonIndex === 1) {
-                this.settings.themeId = Theme.Light;
-            }
-            HandleEvent ('theme_changed', this.settings.themeId === Theme.Light ? 'light' : 'dark');
-            this.SwitchTheme (this.settings.themeId, true);
         });
 
         this.parameters.fileInput.addEventListener ('change', (ev) => {

@@ -51,6 +51,7 @@ span.header_brand_title
 
 div.toolbar
 {
+	float: left;
 	background: var(--ov_toolbar_background_color);
 }
 
@@ -175,20 +176,25 @@ div.main
 
 div.main_file_name
 {
-	position: absolute;
-	right: 90px;
-	top: 0px;
+	float: left;
 	height: 38px;
 	line-height: 38px;
 	max-width: 35%;
-	margin: 0px;
+	margin: 0px 0px 0px 10px;
+	padding-left: 10px;
+	border-left: 1px solid var(--ov_border_color);
 	font-size: 14px;
 	opacity: 0.75;
 	white-space: nowrap;
-	text-align: right;
+	text-align: left;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	pointer-events: none;
+}
+
+div.main_file_name:empty
+{
+	display: none;
 }
 
 div.main_left_container
