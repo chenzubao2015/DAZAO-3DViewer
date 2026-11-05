@@ -114,6 +114,22 @@ export function CreateOcctWorker (worker)
 
 		let localBaseUrl = new URL ('assets/libs/', window.location.href).href;
 		let cdnBaseUrl = 'https://cdn.jsdelivr.net/npm/occt-import-js@0.0.22/dist/';
+		let isFileProtocol = (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:');
+
+		function LoadWorkerFromBase64Script () {
+			let scriptUrl = new URL ('assets/libs/occt-worker-base64.js', window.location.href).href;
+			return LoadExternalLibraryFromUrl (scriptUrl).then (() => {
+				let b64 = window.__OCCT_WORKER_BASE64__;
+				if (!b64) {
+					throw new Error ('Missing embedded OCCT worker.');
+				}
+				let workerScript = atob (b64);
+				window.__OCCT_WORKER_BASE64__ = null;
+				let blob = new Blob ([workerScript], { type : 'text/javascript' });
+				occtWorkerUrl = URL.createObjectURL (blob);
+				return new Worker (occtWorkerUrl);
+			});
+		}
 
 		function LoadWorkerFromBase (baseUrl) {
 			return fetch (baseUrl + 'occt-import-js-worker.js')
@@ -132,10 +148,23 @@ export function CreateOcctWorker (worker)
 				});
 		}
 
+		if (isFileProtocol) {
+			LoadWorkerFromBase64Script ()
+				.then (resolve)
+				.catch (() => {
+					LoadWorkerFromBase (cdnBaseUrl).then (resolve).catch (reject);
+				});
+			return;
+		}
+
 		LoadWorkerFromBase (localBaseUrl)
 			.then (resolve)
 			.catch (() => {
-				LoadWorkerFromBase (cdnBaseUrl).then (resolve).catch (reject);
+				LoadWorkerFromBase64Script ()
+					.then (resolve)
+					.catch (() => {
+						LoadWorkerFromBase (cdnBaseUrl).then (resolve).catch (reject);
+					});
 			});
 	});
 }

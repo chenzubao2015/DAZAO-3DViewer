@@ -6,9 +6,9 @@
 
 - **全画幅纯净界面**：去除顶部品牌横幅、外链图标、作者信息、赞助/广告位、QA 文档及示例模型推广，3D 画布 100% 铺满视口。
 - **浮动侧边面板（默认收起）**：打开模型时默认收起左右侧栏，提供无遮挡的全屏预览视野；需要查看零件树、材质、几何尺寸/体积/表面积或切换边线/环境光时，点击左上角或右上角悬浮按钮即可展开。
-- **全格式本地解析**：
-  - 支持直接拖拽或选择：`step / stp`、`iges / igs`、`stl`、`obj (+mtl)`、`gltf / glb`、`fbx`、`3dm`、`3mf`、`brep`、`fcstd`、`ifc`、`dae`、`ply`、`wrl`、`3ds`、`amf`、`bim`、`off` 以及包含模型的 `.zip` 压缩包。
-  - 已内置 `occt-import-js` (WASM) 与 `draco3d` 解码库至本地 `assets/libs/`，无需依赖外部 CDN 即可快速解析 STEP/IGES 等工业 CAD 图纸。
+- **全格式本地解析（3D 模型 + 2D CAD 图纸）**：
+  - 支持直接拖拽或选择：`step / stp`、`iges / igs`、`dxf`、`dwg`、`stl`、`obj (+mtl)`、`gltf / glb`、`fbx`、`3dm`、`3mf`、`brep`、`fcstd`、`ifc`、`dae`、`ply`、`wrl`、`3ds`、`amf`、`bim`、`off` 以及包含模型的 `.zip` 压缩包。
+  - 已内置 `occt-import-js` (WASM)、`libredwg-web` (WASM) 与 `draco3d` 解码库至本地 `assets/libs/`，并内置 `file://` 离线 Base64 加载回退，直接双击 `index.html` 或静态部署均可离线解析 STEP/IGES/DWG/DXF 等工业 CAD 图纸。
 - **自适应中英界面**：根据浏览器语言自动显示简体中文或英文界面。
 
 ## GitHub 静态部署步骤

@@ -20,6 +20,7 @@ import { AddSvgIconElement, GetFilesFromDataTransfer, InstallTooltip, IsSmallWid
 import { ShowOpenUrlDialog } from './openurldialog.js';
 import { ShowSharingDialog } from './sharingdialog.js';
 import { GetDefaultMaterials, ReplaceDefaultMaterialsColor } from '../engine/model/modelutils.js';
+import { Coord3D } from '../engine/geometry/coord3d.js';
 import { Direction } from '../engine/geometry/geometry.js';
 import { CookieGetBoolVal, CookieSetBoolVal } from './cookiehandler.js';
 import { MeasureTool } from './measuretool.js';
@@ -276,6 +277,14 @@ export class Website
         this.parameters.fileNameDiv.innerHTML = importResult.mainFile;
         this.viewer.SetMainObject (threeObject);
         this.viewer.SetUpVector (Direction.Y, false);
+        let extension = GetFileExtension (importResult.mainFile);
+        if (extension === 'dxf' || extension === 'dwg') {
+            let camera = this.viewer.GetCamera ();
+            camera.eye = new Coord3D (0.0, 0.0, 3.0);
+            camera.center = new Coord3D (0.0, 0.0, 0.0);
+            camera.up = new Coord3D (0.0, 1.0, 0.0);
+            this.viewer.SetCamera (camera);
+        }
         this.navigator.FillTree (importResult);
         this.sidebar.UpdateControlsVisibility ();
         this.FitModelToWindow (true);
