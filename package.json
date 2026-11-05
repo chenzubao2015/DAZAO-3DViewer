@@ -1,39 +1,13 @@
 {
-  "name": "dazao-3d-viewer",
+  "name": "dazao-3dviewer",
   "version": "1.0.0",
   "description": "DAZAO 3DViewer - 3D & 2D CAD Online Viewer",
   "license": "MIT",
   "type": "module",
   "main": "./o3dv/o3dv.website.min.js",
   "repository": "github:chenzubao2015/DAZAO-3DViewer",
-  "keywords": [
-    "3d",
-    "2d",
-    "viewer",
-    "cad",
-    "dxf",
-    "dwg",
-    "3dm",
-    "3ds",
-    "3mf",
-    "amf",
-    "bim",
-    "brep",
-    "dae",
-    "fbx",
-    "fcstd",
-    "gltf",
-    "ifc",
-    "iges",
-    "step",
-    "stl",
-    "obj",
-    "off",
-    "ply",
-    "wrl"
-  ],
   "scripts": {
-    "build": "echo \"Static assets are pre-built in root directory\"",
+    "build": "node -e \"const fs=require('fs'),path=require('path');fs.rmSync('dist',{recursive:true,force:true});fs.mkdirSync('dist',{recursive:true});for(const item of ['index.html','embed.html','o3dv','assets']){if(fs.existsSync(item)){fs.cpSync(item,path.join('dist',item),{recursive:true});}}for(const f of ['libredwg-wasm-base64.js','occt-worker-base64.js']){const p=path.join('dist','assets','libs',f);if(fs.existsSync(p))fs.rmSync(p,{force:true});}console.log('Built clean static assets into ./dist for Cloudflare deployment.');\"",
     "start": "python -m http.server 8088"
   }
 }
