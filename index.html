@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+
+    <title>DAZAO 3DViewer</title>
+
+    <!-- website start -->
+    <link rel="stylesheet" type="text/css" href="o3dv/o3dv.website.min.css">
+    <script type="text/javascript" src="o3dv/o3dv.website.min.js"></script>
+    <!-- website end -->
+
+    <script type="text/javascript">
+        OV.StartWebsite ();
+    </script>
+</head>
+
+<body>
+    <input type="file" id="open_file" style="display:none;" multiple></input>
+    <div class="header" id="header">
+        <a class="header_brand" href="index.html" title="DAZAO 3DViewer">
+            <img class="header_brand_logo" src="assets/images/logo.svg" alt="DAZAO">
+            <span class="header_brand_title">DAZAO 3DViewer</span>
+        </a>
+        <div class="toolbar" id="toolbar"></div>
+        <div class="main_file_name only_full_width" id="main_file_name"></div>
+        <div id="header_buttons" style="display:none;"></div>
+    </div>
+    <div class="main" id="main">
+        <div class="main_left_container only_full_width" id="main_left_container">
+            <div class="main_navigator ov_panel_set_container" id="main_navigator"></div>
+            <div class="main_splitter" id="main_navigator_splitter" style="display:none;"></div>
+        </div>
+        <div class="main_viewer" id="main_viewer"></div>
+        <div class="main_right_container only_full_width" id="main_right_container">
+            <div class="main_splitter" id="main_sidebar_splitter" style="display:none;"></div>
+            <div class="main_sidebar ov_panel_set_right_container" id="main_sidebar"></div>
+        </div>
+    </div>
+    <div class="intro ov_thin_scrollbar" id="intro">
+        <div class="intro_content" id="intro_content">
+            <div class="intro_logo">
+                <img class="intro_logo" src="assets/images/logo.svg" alt="DAZAO 3DViewer">
+                <div class="intro_brand_title">DAZAO 3DViewer</div>
+                <div class="intro_dragdrop_text" id="intro_dragdrop_text"></div>
+                <div class="intro_open_btn" id="intro_open_btn"></div>
+            </div>
+            <div class="intro_formats">
+                <div class="intro_formats_title" id="intro_formats_title"></div>
+                <div class="intro_file_formats">
+                    <span>step / stp</span>
+                    <span>iges / igs</span>
+                    <span>stl</span>
+                    <span>obj</span>
+                    <span>gltf / glb</span>
+                    <span>fbx</span>
+                    <span>3dm</span>
+                    <span>3mf</span>
+                    <span>brep</span>
+                    <span>fcstd</span>
+                    <span>ifc</span>
+                    <span>dae</span>
+                    <span>ply</span>
+                    <span>wrl</span>
+                    <span>3ds</span>
+                    <span>amf</span>
+                    <span>bim</span>
+                    <span>off</span>
+                    <span>zip</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
