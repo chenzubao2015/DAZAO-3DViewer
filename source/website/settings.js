@@ -15,7 +15,7 @@ export class Settings
     constructor (themeId)
     {
         this.themeId = themeId;
-        this.environmentMapName = 'fishermans_bastion';
+        this.environmentMapName = 'dazao';
         this.backgroundIsEnvMap = false;
         if (this.themeId === Theme.Light) {
             this.backgroundColor = new RGBAColor (255, 255, 255, 255);
@@ -32,7 +32,11 @@ export class Settings
     LoadFromCookies ()
     {
         this.themeId = CookieGetIntVal ('ov_theme_id', GetPreferredColorScheme ());
-        this.environmentMapName = CookieGetStringVal ('ov_environment_map', 'fishermans_bastion');
+        this.environmentMapName = CookieGetStringVal ('ov_environment_map', 'dazao');
+        const validEnvMaps = ['dazao', 'dazao_2', 'dazao_3', 'dazao_4', 'dazao_5', 'dazao_6'];
+        if (!validEnvMaps.includes (this.environmentMapName)) {
+            this.environmentMapName = 'dazao';
+        }
         this.backgroundIsEnvMap = CookieGetBoolVal ('ov_background_is_envmap', false);
         this.backgroundColor = CookieGetRGBAColorVal ('ov_background_color', new RGBAColor (255, 255, 255, 255));
         this.defaultLineColor = CookieGetRGBColorVal ('ov_default_line_color', new RGBColor (100, 100, 100));

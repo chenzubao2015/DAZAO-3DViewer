@@ -32,7 +32,7 @@ export class Embed
             }
             TransformFileHostUrls (urls);
 
-            let envMapName = 'fishermans_bastion';
+            let envMapName = 'dazao';
             let bgIsEnvMap = false;
             let environmentSettingsObj = this.hashHandler.GetEnvironmentSettingsFromHash ();
             if (environmentSettingsObj !== null) {

@@ -66,27 +66,27 @@ class EnvironmentMapPopup extends PopupDialog
         let envMapImages = [
             {
                 element: null,
-                name: 'fishermans_bastion'
+                name: 'dazao'
             },
             {
                 element: null,
-                name: 'citadella'
+                name: 'dazao_2'
             },
             {
                 element: null,
-                name: 'maskonaive'
+                name: 'dazao_3'
             },
             {
                 element: null,
-                name: 'teide'
+                name: 'dazao_4'
             },
             {
                 element: null,
-                name: 'ice_river'
+                name: 'dazao_5'
             },
             {
                 element: null,
-                name: 'park'
+                name: 'dazao_6'
             }
         ];
 
@@ -114,7 +114,7 @@ class EnvironmentMapPopup extends PopupDialog
                     envMapImage.element.classList.add ('selected');
                     if (envMapImage.name === 'noimage') {
                         settings.backgroundIsEnvMap = false;
-                        settings.environmentMapName = 'fishermans_bastion';
+                        settings.environmentMapName = 'dazao';
                     } else {
                         settings.backgroundIsEnvMap = true;
                         settings.environmentMapName = envMapImage.name;
