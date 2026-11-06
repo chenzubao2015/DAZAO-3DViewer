@@ -63,6 +63,15 @@ export function CalculatePopupPositionToElementTopLeft (elementDiv, contentDiv)
     };
 }
 
+export function CalculatePopupPositionToElementTopRight (elementDiv, contentDiv)
+{
+    let offset = elementDiv.getBoundingClientRect ();
+    return {
+        x : offset.left + elementDiv.offsetWidth + 10,
+        y : offset.top
+    };
+}
+
 export function CalculatePopupPositionToElementBottomRight (elementDiv, contentDiv)
 {
     let offset = elementDiv.getBoundingClientRect ();

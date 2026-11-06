@@ -1,7 +1,7 @@
 import { RGBColor, RGBColorToHexString, RGBAColor, RGBAColorToHexString, ColorComponentFromFloat } from '../engine/model/color.js';
 import { AddDiv, AddDomElement, ShowDomElement, SetDomElementOuterHeight } from '../engine/viewer/domutils.js';
 import { AddRangeSlider, AddToggle, AddCheckbox } from '../website/utils.js';
-import { CalculatePopupPositionToElementTopLeft } from './dialogs.js';
+import { CalculatePopupPositionToElementTopRight } from './dialogs.js';
 import { PopupDialog } from './dialog.js';
 import { Settings } from './settings.js';
 import { SidebarPanel } from './sidebarpanel.js';
@@ -60,7 +60,7 @@ class EnvironmentMapPopup extends PopupDialog
     ShowPopup (buttonDiv, shadingType, settings, callbacks)
     {
         let contentDiv = super.Init (() => {
-            return CalculatePopupPositionToElementTopLeft (buttonDiv, contentDiv);
+            return CalculatePopupPositionToElementTopRight (buttonDiv, contentDiv);
         });
 
         let envMapImages = [
